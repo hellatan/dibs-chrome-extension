@@ -1,0 +1,12 @@
+body {
+	min-width: 200px;
+	overflow-x: hidden;
+}
+
+label {
+	display: block;
+}
+
+.err {
+	color: red;
+}

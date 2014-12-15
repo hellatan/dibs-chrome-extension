@@ -1,33 +1,31 @@
 <!doctype html>
 <html>
   <head>
-    <title>Getting Started Extension's Popup</title>
-    <style>
-      body {
-        min-width: 357px;
-        overflow-x: hidden;
-      }
-
-      img {
-        margin: 5px;
-        border: 2px solid black;
-        vertical-align: middle;
-        width: 75px;
-        height: 75px;
-      }
-    </style>
-
+    <title>github helpers</title>
+    <link rel="stylesheet" href="popup.css" />
     <!--
       - JavaScript and HTML must be in separate files: see our Content Security
       - Policy documentation[1] for details and explanation.
       -
       - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
      -->
-    <script src="popup.js"></script>
+    <script src="sizzle.min.js"></script>
+    <script src="ext.js"></script>
   </head>
   <body>
-    <div class="">
-      <input type="number" id="milestoneInput" placeholder="Please input a milestone" />
+    <div id="extContainer">
+      <form action="" class="form-group">
+        <div id="formMilestone">
+          <label for="formMilestoneInput">Milestone</label>
+          <input type="text" placeholder="milestone" id="formMilestoneInput" class="form-input" />
+        </div>
+        <div id="formStatus">
+          <label for="formPRStatus">Status</label>
+          <input type="radio" name="formPRStatus" value="open" />Open
+          <input type="radio" name="formPRStatus" value="closed">Closed
+        </div>
+        <button id="formMilestoneSearch" class="form-button">Go!</button>
+      </form>
     </div>
   </body>
 </html>
