@@ -64,7 +64,7 @@ filterSets = {
     getStatusValue: function () {
         var $radios = this.getStatus();
         var value = $radios.filter(filterChecked);
-        return value.length ? value.value : ''
+        return value.length ? value[0].value : ''
     },
     errorMessages: {
         'milestone': 'you must input a milestone',
@@ -109,21 +109,21 @@ filterSets = {
             el.classList.remove(_class);
         }
     },
-    handlMilestoneState: function (milestone) {
+    handleMilestoneState: function (milestone) {
         if (!milestone) {
             this.showError('milestone');
             return false;
-        } else {
-            this.removeError('milestone');
         }
+        this.removeError('milestone');
+        return true;
     },
     handleStatusState: function (status) {
         if (!status) {
             this.showError('status');
             return false;
-        } else {
-            this.removeError('status');
         }
+        this.removeError('status');
+        return true;
     },
     milestonePRs: function () {
         var milestone = this.getMilestoneValue();
@@ -131,7 +131,7 @@ filterSets = {
         var qsVals = [];
         var filterValues = {};
         var url;
-        var validMilestone = this.handlMilestoneState(milestone);
+        var validMilestone = this.handleMilestoneState(milestone);
         var validStatus = this.handleStatusState(status);
         if (!validMilestone || !validStatus) {
             return false;
