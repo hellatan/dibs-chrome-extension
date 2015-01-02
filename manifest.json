@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
 
-  "name": "dibs chrome extension",
+  "name": "dibs filters extension",
   "description": "This extension helps with filtering github pull requests and jira fix versions",
   "version": "1.0",
 
