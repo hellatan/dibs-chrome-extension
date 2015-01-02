@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "github helpers",
-  "description": "This extension helps with common github tasks.",
+  "name": "dibs chrome extension",
+  "description": "This extension helps with filtering github pull requests and jira fix versions",
   "version": "1.0",
 
   "browser_action": {
