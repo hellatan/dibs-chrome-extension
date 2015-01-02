@@ -1,32 +1,41 @@
 <!doctype html>
 <html>
-  <head>
-    <title>github helpers</title>
+<head>
+    <title>dibs utils</title>
     <link rel="stylesheet" href="popup.css" />
     <!--
-      - JavaScript and HTML must be in separate files: see our Content Security
-      - Policy documentation[1] for details and explanation.
-      -
-      - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
-     -->
+    - JavaScript and HTML must be in separate files: see our Content Security
+    - Policy documentation[1] for details and explanation.
+    -
+    - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
+    -->
     <script src="sizzle.min.js"></script>
     <script src="ext.js"></script>
-  </head>
-  <body>
+</head>
+<body>
     <div id="extContainer">
-      <form action="" class="form-group">
-        <div id="formMilestone">
-          <label for="formMilestoneInput">Milestone</label>
-          <input type="text" placeholder="milestone" id="formMilestoneInput" class="form-input" />
-        </div>
-        <div id="formStatus">
-          <label for="formPRStatus">Status</label>
-          <input type="radio" name="formPRStatus" value="open" />Open
-          <input type="radio" name="formPRStatus" value="closed">Closed
-        </div>
-        <button id="formMilestoneSearch" class="form-button">Go!</button>
-      </form>
+        <form action="" id="githubForm" class="form-group">
+            <p class="header">Github</p>
+            <div id="formMilestone" class="input-wrap input-text-wrap">
+                <label for="formMilestoneInput" class="input-label">Milestone</label>
+                <input type="text" placeholder="milestone" id="formMilestoneInput" class="form-input" />
+            </div>
+            <div id="formStatus" class="input-wrap input-radio-wrap">
+                <label for="formStatus" class="input-label">Status</label>
+                <input type="radio" name="formPRStatus" value="open" />Open
+                <input type="radio" name="formPRStatus" value="closed">Closed
+            </div>
+            <button id="formMilestoneSearch" class="form-button">go to github!</button>
+        </form>
+        <form action="" id="jiraForm" class="form-group">
+            <p class="header">Jira</p>
+            <div id="formFixVersion" class="input-wrap input-text-wrap">
+                <label for="formFixVersionInput" class="input-label">Fix Version</label>
+                <input type="text" placeholder="fix version" id="formFixVersionInput" class="form-input" />
+            </div>
+            <button id="formFixVersionSearch" class="form-button">go to jira!</button>
+        </form>
     </div>
-  </body>
+</body>
 </html>
 

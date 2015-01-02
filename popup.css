@@ -1,12 +1,60 @@
 body {
-	min-width: 200px;
-	overflow-x: hidden;
+    min-width: 200px;
+    overflow-x: hidden;
 }
 
 label {
-	display: block;
+    display: block;
 }
 
 .err {
-	color: red;
+    color: red;
+}
+
+.form-group {
+    border-top: 1px solid #ccc;
+    margin-top: 10px;
+    padding: 0 10px;
+}
+
+.form-group:first-child {
+    border-top: 0;
+    margin-top: 0;
+}
+
+.form-button {
+    background-color: #eee;
+    border: 0;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.input-wrap {
+    padding: 0 10px 10px;
+}
+
+.input-wrap:nth-child(even) {
+
+}
+
+.input-wrap:nth-child(odd) {
+    background-color: #eee;
+    padding-top: 10px;
+}
+
+.input-label {
+    padding-bottom: 10px;
+}
+
+.input-text-wrap {
+
+}
+
+.input-radio-wrap {
+
+}
+
+.input-radio-wrap > input[type=radio] {
+    margin-right: 10px;
 }
