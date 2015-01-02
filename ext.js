@@ -1,8 +1,9 @@
 (function () {
     var $ = Sizzle;
     var githubUriPR = 'https://github.com/pulls';
-    var jiraIssues = 'https://1stdibs.atlassian.net/issues/?jql=fixVersion%20%3D%20{version}%20ORDER%20BY%20status%20ASC';
-    var jiraTicket = 'https://1stdibs.atlassian.net/browse/{ticket}';
+    var jiraDomain =  '';
+    var jiraIssues = '{jiraDomain}/issues/?jql=fixVersion%20%3D%20{version}%20ORDER%20BY%20status%20ASC';
+    var jiraTicket = '{jiraDomain}/browse/{ticket}';
     var filters = {
         'is': 'is',
         'user': 'user',
@@ -14,6 +15,12 @@
     var elHelpers;
     var validationHelpers;
     var filterSets;
+
+    chrome.storage.sync.get(['jiraDomain'], function (items) {
+        jiraDomain = items.jiraDomain || 'https://1stdibs.atlassian.net';
+        jiraIssues = jiraIssues.replace('{jiraDomain}', jiraDomain);
+        jiraTicket = jiraTicket.replace('{jiraDomain}', jiraDomain);
+    });
 
     helpers = {
         filterValue: function (e, type) {
