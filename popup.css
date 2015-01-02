@@ -12,14 +12,14 @@ label {
 }
 
 .form-group {
-    border-top: 1px solid #ccc;
-    margin-top: 10px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
     padding: 0 10px;
 }
 
-.form-group:first-child {
-    border-top: 0;
-    margin-top: 0;
+.form-group:last-child {
+    border-bottom: 0;
+    margin-bottom: 0;
 }
 
 .form-button {
@@ -30,16 +30,14 @@ label {
 }
 
 .input-wrap {
-    padding: 0 10px 10px;
+    padding: 10px;
 }
 
-.input-wrap:nth-child(even) {
-
+.form-group > .input-wrap:nth-child(even) {
 }
 
-.input-wrap:nth-child(odd) {
+.form-group > .input-wrap:nth-child(odd) {
     background-color: #eee;
-    padding-top: 10px;
 }
 
 .input-label {

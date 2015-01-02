@@ -2,12 +2,14 @@
     var $ = Sizzle;
     var githubUriPR = 'https://github.com/pulls';
     var jiraIssues = 'https://1stdibs.atlassian.net/issues/?jql=fixVersion%20%3D%20{version}%20ORDER%20BY%20status%20ASC';
+    var jiraTicket = 'https://1stdibs.atlassian.net/browse/{ticket}';
     var filters = {
         'is': 'is',
         'user': 'user',
         'milestone': 'milestone'
     };
     var decimalRegexp = /^\d{1,2}(\.\d{1,2})+$/;
+    var jiraTicketRegexp = /^\w-\d{1, 6}$/;
     var helpers;
     var elHelpers;
     var validationHelpers;
@@ -20,6 +22,8 @@
                 return this.filterMilestone(e);
             } else if (type === 'fixversion') {
                 return this.filterFixVersion(e);
+            } else if (type === 'jiraticket') {
+                return this.filterJiraTicket(e);
             }
         },
         filterFixVersion: function (e) {
@@ -30,6 +34,11 @@
         filterMilestone: function (e) {
             e.preventDefault();
             filterSets.milestonePRs();
+            return false;
+        },
+        filterJiraTicket: function (e) {
+            e.preventDefault();
+            filterSets.jiraTicketFilter();
             return false;
         },
         createFilterUrl: function (uri, values) {
@@ -58,8 +67,15 @@
         getStatus: function () {
             return this.getEl('#formStatus > input[type=radio]');
         },
+        getJiraTicket: function () {
+            return this.getEl('#formJiraTicketInput');
+        },
         getFixVersionValue: function () {
             var $el = this.getFixVersion();
+            return $el.length ? $el[0].value : '';
+        },
+        getJiraTicketValue: function () {
+            var $el = this.getJiraTicket();
             return $el.length ? $el[0].value : '';
         },
         getMilestoneValue: function () {
@@ -85,6 +101,9 @@
                 case 'fixversion':
                     $el = this.getFixVersion();
                     break;
+                case 'jiraticket':
+                    $el = this.getJiraTicket();
+                    break;
             }
             if ($el.length) {
                 $el[0].parentNode.classList.add('err');
@@ -100,6 +119,9 @@
                     break;
                 case 'fixversion':
                     $el = this.getFixVersion();
+                    break;
+                case 'jiraticket':
+                    $el = this.getJiraTicket();
                     break;
             }
             if ($el.length) {
@@ -139,6 +161,16 @@
                 value: fixVersion
             }
         },
+        jiraTicket: function () {
+            var jiraTicket = elHelpers.getJiraTicketValue();
+            var validJiraTicket = this.handleJiraTicketState(jiraTicket);
+            if (!validJiraTicket) {
+                return false;
+            }
+            return {
+                value: jiraTicket
+            }
+        },
         handleMilestoneState: function (milestone) {
             if (!milestone || !decimalRegexp.test(milestone)) {
                 elHelpers.showError('milestone');
@@ -161,6 +193,14 @@
                 return false;
             }
             elHelpers.removeError('fixVersion');
+            return true;
+        },
+        handleJiraTicketState: function (ticket) {
+            if (!ticket || jiraTicketRegexp.test(ticket)) {
+                elHelpers.showError('jiraTicket');
+                return false;
+            }
+            elHelpers.removeError('jiraTicket');
             return true;
         }
     };
@@ -191,6 +231,14 @@
                 url = jiraIssues.replace('{version}', fixVersionInfo.value);
                 helpers.goToUrl(url);
             }
+        },
+        jiraTicketFilter: function () {
+            var jiraTicketInfo = validationHelpers.jiraTicket();
+            var url;
+            if (jiraTicketInfo) {
+                url = jiraTicket.replace('{ticket}', jiraTicketInfo.value);
+                helpers.goToUrl(url);
+            }
         }
     };
 
@@ -204,6 +252,11 @@
             .getElementById('formFixVersionSearch')
             .addEventListener('click', function (e) {
                 helpers.filterValue(e, 'fixVersion');
+            });
+        document
+            .getElementById('formJiraTicketSearch')
+            .addEventListener('click', function (e) {
+                helpers.filterValue(e, 'jiraTicket');
             });
     }
 

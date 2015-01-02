@@ -82,4 +82,33 @@ describe('extension functionality test', function () {
 
         });
     });
+
+    describe('jira ticket functionality', function () {
+        var $jiraTicketEl;
+        var $jiraTicketInputEl;
+
+        beforeEach(function () {
+            urlSpy = spyOn(helpers, 'goToUrl');
+            $jiraTicketEl = $('#formJiraTicket');
+            $jiraTicketInputEl = $('#formJiraTicketInput');
+        });
+
+        afterEach(function () {
+            $jiraTicketEl[0].classList.remove('err');
+            $jiraTicketInputEl[0].value = '';
+        });
+
+        it('should result in errors being shown', function () {
+            document.getElementById('formJiraTicketSearch').click();
+            expect(hasClass($jiraTicketEl, 'err')).toBe(true);
+        });
+
+        it('should result in a valid url', function () {
+            var url = 'https://1stdibs.atlassian.net/browse/FINDING-1234';
+            $jiraTicketInputEl[0].value = 'FINDING-1234';
+            document.getElementById('formJiraTicketSearch').click();
+            expect(urlSpy).toHaveBeenCalledWith(url);
+
+        });
+    });
 });
