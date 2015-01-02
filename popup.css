@@ -1,3 +1,6 @@
+* {
+}
+
 body {
     min-width: 200px;
     overflow-x: hidden;
@@ -5,6 +8,11 @@ body {
 
 label {
     display: block;
+    box-sizing: border-box;
+}
+
+input {
+    box-sizing: border-box;
 }
 
 .err {
@@ -38,6 +46,10 @@ label {
 
 .form-group > .input-wrap:nth-child(odd) {
     background-color: #eee;
+}
+
+.form-input {
+    width: 100%;
 }
 
 .input-label {
