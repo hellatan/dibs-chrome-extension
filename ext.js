@@ -2,8 +2,20 @@
     var $ = Sizzle;
     var githubUriPR = 'https://github.com/pulls';
     var jiraDomain =  'https://1stdibs.atlassian.net';
-    var jiraIssues = '{jiraDomain}/issues/?jql=fixVersion%20%3D%20{version}%20ORDER%20BY%20status%20ASC';
+    // jira's query system is a real piece of shit to program against
+    var jiraIssues = '{jiraDomain}/issues/?jql=';
     var jiraTicket = '{jiraDomain}/browse/{ticket}';
+    var jiraFilterOrder = ['fixVersion', 'assignee', 'order'];
+    var jiraOriginals = {
+        'fixVersion': 'fixVersion = {fixVersion}',
+        'assignee': 'AND assignee in ({assignees})',
+        'order': 'ORDER BY status ASC'
+    };
+    var jiraFilters = {
+        'fixVersion': jiraOriginals.fixVersion,
+        'assignee': jiraOriginals.assignee,
+        'order':jiraOriginals.order
+    };
     var filters = {
         'is': 'is',
         'user': 'user',
@@ -29,6 +41,14 @@
     } else {
         jiraIssues = jiraIssues.replace('{jiraDomain}', jiraDomain);
         jiraTicket = jiraTicket.replace('{jiraDomain}', jiraDomain);
+    }
+
+    function resetJiraFilters() {
+        for (var i in jiraOriginals) {
+            if (jiraOriginals.hasOwnProperty(i)) {
+                jiraFilters[i] = jiraOriginals[i];
+            }
+        }
     }
 
     helpers = {
@@ -111,11 +131,18 @@
         getStatus: function () {
             return this.getEl('#formStatus > input[type=radio]');
         },
+        getJiraAssignee: function () {
+            return this.getEl('#formAssigneeInput');
+        },
         getJiraTicket: function () {
             return this.getEl('#formJiraTicketInput');
         },
         getFixVersionValue: function () {
             var $el = this.getFixVersion();
+            return $el.length ? $el[0].value : '';
+        },
+        getJiraAssigneeValue: function () {
+            var $el = this.getJiraAssignee();
             return $el.length ? $el[0].value : '';
         },
         getJiraTicketValue: function () {
@@ -205,6 +232,12 @@
                 value: fixVersion
             }
         },
+        jiraAssignee: function () {
+            // not required field
+            return {
+                value: elHelpers.getJiraAssigneeValue()
+            }
+        },
         jiraTicket: function () {
             var jiraTicket = elHelpers.getJiraTicketValue();
             var validJiraTicket = this.handleJiraTicketState(jiraTicket);
@@ -270,11 +303,27 @@
         },
         fixVersionFilter: function () {
             var fixVersionInfo = validationHelpers.fixVersion();
+            var assigneeInfo = this.assigneeFilter();
+            var localJiraFilterOrder = jiraFilterOrder.slice(0);
+            var qp = [];
             var url;
             if (fixVersionInfo) {
-                url = jiraIssues.replace('{version}', fixVersionInfo.value);
+                jiraFilters.fixVersion = jiraFilters.fixVersion.replace('{fixVersion}', fixVersionInfo.value);
+                if (assigneeInfo && assigneeInfo.value) {
+                    jiraFilters.assignee = jiraFilters.assignee.replace('{assignees}', assigneeInfo.value);
+                } else {
+                    localJiraFilterOrder.splice(jiraFilterOrder.indexOf('assignee'), 1);
+                }
+                localJiraFilterOrder.forEach(function (item) {
+                    qp.push(jiraFilters[item]);
+                });
+                url = jiraIssues + encodeURIComponent(qp.join(' '));
+                resetJiraFilters();
                 helpers.goToUrl(url);
             }
+        },
+        assigneeFilter: function () {
+            return validationHelpers.jiraAssignee();
         },
         jiraTicketFilter: function () {
             var jiraTicketInfo = validationHelpers.jiraTicket();

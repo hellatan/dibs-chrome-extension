@@ -57,16 +57,19 @@ describe('extension functionality test', function () {
     describe('jira functionality', function () {
         var $fixVersionEl;
         var $fixVersionInputEl;
+        var $formAssigneeInputEl;
 
         beforeEach(function () {
             urlSpy = spyOn(helpers, 'goToUrl');
             $fixVersionEl = $('#formFixVersion');
             $fixVersionInputEl = $('#formFixVersionInput');
+            $formAssigneeInputEl = $('#formAssigneeInput');
         });
 
         afterEach(function () {
             $fixVersionEl[0].classList.remove('err');
             $fixVersionInputEl[0].value = '';
+            $formAssigneeInputEl[0].value = '';
         });
 
         it('should result in errors being shown', function () {
@@ -79,7 +82,27 @@ describe('extension functionality test', function () {
             $fixVersionInputEl[0].value = '5.5';
             document.getElementById('formFixVersionSearch').click();
             expect(urlSpy).toHaveBeenCalledWith(url);
+        });
 
+        it('should result in a valid url with one asssignee', function () {
+            var url = 'https://1stdibs.atlassian.net/issues/?jql=fixVersion%20%3D%205.5%20AND%20assignee%20in%20(dale)%20ORDER%20BY%20status%20ASC';
+            $fixVersionInputEl[0].value = '5.5';
+            $formAssigneeInputEl[0].value = 'dale';
+            document.getElementById('formFixVersionSearch').click();
+            expect(urlSpy).toHaveBeenCalledWith(url);
+        });
+
+        it('should result in a valid url with multiple assignees', function () {
+            var url = 'https://1stdibs.atlassian.net/issues/?jql=fixVersion%20%3D%205.5%20AND%20assignee%20in%20(caroline.ho%2C%20dale%2C%20peter)%20ORDER%20BY%20status%20ASC';
+            $fixVersionInputEl[0].value = '5.5';
+            $formAssigneeInputEl[0].value = 'caroline.ho, dale, peter';
+            document.getElementById('formFixVersionSearch').click();
+            expect(urlSpy).toHaveBeenCalledWith(url);
+            url = 'https://1stdibs.atlassian.net/issues/?jql=fixVersion%20%3D%205.5%20AND%20assignee%20in%20(caroline.ho%2Cdale%2Cpeter)%20ORDER%20BY%20status%20ASC';
+            $fixVersionInputEl[0].value = '5.5';
+            $formAssigneeInputEl[0].value = 'caroline.ho,dale,peter';
+            document.getElementById('formFixVersionSearch').click();
+            expect(urlSpy).toHaveBeenCalledWith(url);
         });
     });
 
