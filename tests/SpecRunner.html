@@ -6,6 +6,8 @@
 
   <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.1.3/jasmine_favicon.png">
   <link rel="stylesheet" href="lib/jasmine-2.1.3/jasmine.css">
+    <link rel="stylesheet" href="../normalize.css">
+    <link rel="stylesheet" href="../popup.css">
 
   <script src="lib/jasmine-2.1.3/jasmine.js"></script>
   <script src="lib/jasmine-2.1.3/jasmine-html.js"></script>
@@ -21,37 +23,54 @@
 </head>
 
 <body>
-    <div id="extContainer">
-        <p class="header">Github</p>
-        <form action="" id="githubForm" class="form-group">
-            <a href="https://github.com/login/oauth/authorize?client_id=7a024ae9431dd3bc57d0">Authenitcate?</a>
-            <div id="formMilestone" class="input-wrap input-text-wrap">
-                <label for="formMilestoneInput" class="input-label">Milestone</label>
-                <input type="text" placeholder="milestone" id="formMilestoneInput" class="form-input" />
-            </div>
-            <div id="formStatus" class="input-wrap input-radio-wrap">
-                <label for="formStatus" class="input-label">Status</label>
-                <input type="radio" name="formPRStatus" value="open" />Open
-                <input type="radio" name="formPRStatus" value="closed">Closed
-            </div>
-            <button id="formMilestoneSearch" class="form-button">go to github!</button>
-        </form>
-        <p class="header">Jira</p>
-        <form action="" id="jiraForm" class="form-group">
-            <a href="">Authenitcate?</a>
-            <div id="formFixVersion" class="input-wrap input-text-wrap">
-                <label for="formFixVersionInput" class="input-label">Fix Version</label>
-                <input type="text" placeholder="fix version" id="formFixVersionInput" class="form-input" />
-            </div>
-            <button id="formFixVersionSearch" class="form-button">go to jira!</button>
-        </form>
-        <form action="" id="jiraFormTicket" class="form-group">
-            <div id="formJiraTicket" class="input-wrap input-text-wrap">
-                <label for="formJiraTicketInput" class="input-label">Ticket Number</label>
-                <input type="text" placeholder="ticket number" id="formJiraTicketInput" class="form-input" />
-            </div>
-            <button id="formJiraTicketSearch" class="form-button">go to jira ticket!</button>
-        </form>
+    <div id="extContainer" class="container">
+        <div class="tab-toggle">
+            <ul class="tab-toggle-list cf">
+                <li class="header tab-toggle-list-item is-current">
+                    <a href="#github" class="tab-toggle-list-link is-current">Github</a>
+                </li>
+                <li class="header tab-toggle-list-item">
+                    <a href="#jira" class="tab-toggle-list-link">Jira</a>
+                </li>
+                <li class="settings-wrap">
+                    <a href="/options.html" target="_blank" class="settings-list-link tab-toggle-list-link">Settings</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab is-current" id="githubTab">
+            <form action="" id="githubForm" class="form-group">
+                <div id="formMilestone" class="input-wrap input-text-wrap">
+                    <label for="formMilestoneInput" class="input-label">Milestone</label>
+                    <input type="text" placeholder="milestone" id="formMilestoneInput" class="form-input" />
+                </div>
+                <div id="formStatus" class="input-wrap input-radio-wrap">
+                    <label for="formStatus" class="input-label">Status</label>
+                    <input type="radio" name="formPRStatus" value="open" />Open
+                    <input type="radio" name="formPRStatus" value="closed">Closed
+                </div>
+                <button id="formMilestoneSearch" class="form-button">go to github!</button>
+            </form>
+        </div>
+        <div class="tab" id="jiraTab">
+            <form action="" id="jiraForm" class="form-group">
+                <div id="formFixVersion" class="input-wrap input-text-wrap">
+                    <label for="formFixVersionInput" class="input-label">Fix Version</label>
+                    <input type="text" placeholder="fix version" id="formFixVersionInput" class="form-input" />
+                </div>
+                <div id="formAssignee" class="input-wrap input-text-wrap">
+                    <label for="formAssigneeInput" class="input-label">Assignee(s) (comma separated)</label>
+                    <input type="text" placeholder="assignee(s)" id="formAssigneeInput" class="form-input" />
+                </div>
+                <button id="formFixVersionSearch" class="form-button">go to jira!</button>
+            </form>
+            <form action="" id="jiraFormTicket" class="form-group">
+                <div id="formJiraTicket" class="input-wrap input-text-wrap">
+                    <label for="formJiraTicketInput" class="input-label">Ticket Number</label>
+                    <input type="text" placeholder="ticket number" id="formJiraTicketInput" class="form-input" />
+                </div>
+                <button id="formJiraTicketSearch" class="form-button">go to jira ticket!</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>

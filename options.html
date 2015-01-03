@@ -2,14 +2,21 @@
 <html>
 <head>
     <title>dibs filters extension settings</title>
+    <link rel="stylesheet" href="normalize.css" />
     <link rel="stylesheet" href="popup.css"/>
 </head>
 <body>
 
 <form action="" id="" class="form-group">
-    <div id="formMilestone" class="input-wrap input-text-wrap">
+    <div id="formJiraDomain" class="input-wrap input-text-wrap">
         <label for="jiraDomainInput" class="input-label">Jira Domain</label>
         <input type="text" id="jiraDomainInput" class="form-input" placeholder="1stdibs.atlassian.net">
+    </div>
+
+    <div id="formDefaultTab" class="input-wrap input-radio-wrap">
+        <label for="formDefaultTab" class="input-label">Default Tab Selected</label>
+        <input type="radio" name="formDefaultTab" value="github" />Github
+        <input type="radio" name="formDefaultTab" value="jira">Jira
     </div>
 
     <div id="status"></div>

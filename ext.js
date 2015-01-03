@@ -1,7 +1,7 @@
 (function () {
     var $ = Sizzle;
     var githubUriPR = 'https://github.com/pulls';
-    var jiraDomain =  '';
+    var jiraDomain =  'https://1stdibs.atlassian.net';
     var jiraIssues = '{jiraDomain}/issues/?jql=fixVersion%20%3D%20{version}%20ORDER%20BY%20status%20ASC';
     var jiraTicket = '{jiraDomain}/browse/{ticket}';
     var filters = {
@@ -10,19 +10,56 @@
         'milestone': 'milestone'
     };
     var decimalRegexp = /^\d{1,2}(\.\d{1,2})+$/;
-    var jiraTicketRegexp = /^\w-\d{1, 6}$/;
+    var jiraTicketRegexp = /^\w-\d{1,6}$/;
+    var defaultTabOnOpen;
     var helpers;
     var elHelpers;
     var validationHelpers;
     var filterSets;
 
-    chrome.storage.sync.get(['jiraDomain'], function (items) {
-        jiraDomain = items.jiraDomain || 'https://1stdibs.atlassian.net';
+    if (chrome && chrome.storage) {
+        // having this in a conditional makes the
+        // browser not crash when running jasmine tests
+        chrome.storage.sync.get(['jiraDomain', 'defaultTab'], function (items) {
+            jiraDomain = items.jiraDomain || jiraDomain;
+            jiraIssues = jiraIssues.replace('{jiraDomain}', jiraDomain);
+            jiraTicket = jiraTicket.replace('{jiraDomain}', jiraDomain);
+            defaultTabOnOpen = items.defaultTab;
+        });
+    } else {
         jiraIssues = jiraIssues.replace('{jiraDomain}', jiraDomain);
         jiraTicket = jiraTicket.replace('{jiraDomain}', jiraDomain);
-    });
+    }
 
     helpers = {
+        toggleTab: function (el, id) {
+            var $tab = $('#' + id + 'Tab');
+            if ($tab.length) {
+                if (!$tab[0].classList.contains('is-current')) {
+                    this.removeCurrent(el, id);
+                    $tab[0].classList.add('is-current');
+                }
+            }
+        },
+        removeCurrent: function (el, id) {
+            var $tabs = $('.tab');
+
+            $('.' + el.className).map(function (element) {
+                if (element.href.indexOf(id) === -1) {
+                    element.classList.remove('is-current');
+                    element.parentNode.classList.remove('is-current');
+                } else {
+                    element.classList.add('is-current');
+                    element.parentNode.classList.add('is-current');
+                }
+            });
+
+            $tabs.forEach(function (element) {
+                if (element.classList && element.classList.contains('is-current')) {
+                    element.classList.remove('is-current');
+                }
+            });
+        },
         filterValue: function (e, type) {
             type = (type || '').toLowerCase();
             if (type === 'milestone') {
@@ -249,6 +286,26 @@
         }
     };
 
+    function convertToArray(obj) {
+        return [].map.call(obj, function(element) {
+            return element;
+        })
+    }
+
+    function updateDefaultTab(tabs, target) {
+        tabs.forEach(function (element) {
+            var link;
+            if (element.nodeName === 'LI') {
+                link = convertToArray(element.childNodes).filter(function (childEl) {
+                    return childEl.nodeName === 'A';
+                });
+                if (link[0].href.indexOf(target) !== -1) {
+                    link[0].click();
+                }
+            }
+        });
+    }
+
     function init() {
         document
             .getElementById('formMilestoneSearch')
@@ -265,6 +322,26 @@
             .addEventListener('click', function (e) {
                 helpers.filterValue(e, 'jiraTicket');
             });
+
+        var tabs = document.querySelectorAll('.tab-toggle-list-item');
+
+        if (tabs.length) {
+            // convert tabs into an array
+            // by default it is a NodeList
+            tabs = convertToArray(tabs);
+
+            tabs.forEach(function (element, index) {
+                element.addEventListener('click', function (e) {
+                    var cur = e.target;
+                    helpers.toggleTab(cur, cur.href.split('#').pop());
+                });
+            });
+            setTimeout(function () {
+                if (defaultTabOnOpen) {
+                    updateDefaultTab(tabs, defaultTabOnOpen);
+                }
+            }, 200);
+        }
     }
 
     document.addEventListener('DOMContentLoaded', function () {

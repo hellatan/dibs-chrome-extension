@@ -1,9 +1,10 @@
-* {
+html {
 }
 
 body {
     min-width: 200px;
     overflow-x: hidden;
+    position: relative;
 }
 
 label {
@@ -15,11 +16,84 @@ input {
     box-sizing: border-box;
 }
 
+a:link, a:visited {
+    color: #b19b57;
+}
+a:hover {
+    color: #c3b17a;
+}
+
+.cf {
+    *zoom: 1;
+}
+
+.cf:before, .cf:after {
+    content: " ";
+    display: table;
+}
+
+.cf:after {
+    clear: both;
+}
+
+.container {
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.tab-toggle {
+    border-bottom: 1px solid #aaa;
+}
+
+.tab-toggle-list {
+}
+
+.tab-toggle-list-item {
+    border-bottom: 1px solid #aaa;
+    float: left;
+    margin-bottom: -1px;
+}
+
+.tab-toggle-list-item.is-current {
+    border-color: white;
+}
+
+.tab-toggle-list-link {
+    background-color: #ccc;
+    display: block;
+    padding: 10px;
+    opacity: 0.5;
+}
+
+.tab-toggle-list-link:hover {
+    opacity: 1;
+}
+
+.tab-toggle-list-link.is-current {
+    background-color: white;
+    opacity: 1;
+    border: 1px solid #aaa;
+    border-top: 0;
+    border-bottom: 0;
+}
+
+.tab {
+    display: none;
+    margin-top: 10px;
+    position: absolute;
+    width: 100%;
+}
+
+.tab.is-current {
+    display: block;
+}
+
 .err {
     color: red;
 }
 
 .form-group {
+    box-sizing: border-box;
     border-bottom: 1px solid #ccc;
     margin-bottom: 10px;
     padding: 0 10px;
@@ -66,4 +140,11 @@ input {
 
 .input-radio-wrap > input[type=radio] {
     margin-right: 10px;
+}
+
+.settings-wrap {
+    float: right;
+}
+.settings-list-link {
+    background-color: white;
 }

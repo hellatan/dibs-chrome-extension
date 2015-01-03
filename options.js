@@ -5,11 +5,22 @@
  * Copyright 1stdibs.com, Inc. 2015. All Rights Reserved.
  */
 
+function convertToArray(obj) {
+    return [].map.call(obj, function(element) {
+        return element;
+    })
+}
+
 // Saves options to chrome.storage
-function save_options() {
+function saveOptions() {
     var jiraDomain = document.getElementById('jiraDomainInput').value;
+    var defaultTab = convertToArray(document.querySelectorAll('input[name=formDefaultTab]'));
+    defaultTab = defaultTab.filter(function (element) {
+        return !!element.checked;
+    });
     chrome.storage.sync.set({
-        jiraDomain: jiraDomain
+        jiraDomain: jiraDomain,
+        defaultTab: defaultTab.length ? defaultTab[0].value : ''
     }, function() {
         // Update status to let user know options were saved.
         var status = document.getElementById('status');
@@ -22,13 +33,20 @@ function save_options() {
 
 // Restores select box and checkbox state using the preferences
 // stored in chrome.storage.
-function restore_options() {
+function restoreOptions() {
     // Use default value color = 'red' and likesColor = true.
     chrome.storage.sync.get({
-        jiraDomain: ''
+        jiraDomain: '',
+        defaultTab: ''
     }, function(items) {
         document.getElementById('jiraDomainInput').value = items.jiraDomain;
+        var defaultTab = convertToArray(document.querySelectorAll('input[name=formDefaultTab]'));
+        defaultTab.forEach(function (element) {
+            if (element.value === items.defaultTab) {
+                element.checked = true;
+            }
+        });
     });
 }
-document.addEventListener('DOMContentLoaded', restore_options);
-document.getElementById('save').addEventListener('click', save_options);
+document.addEventListener('DOMContentLoaded', restoreOptions);
+document.getElementById('save').addEventListener('click', saveOptions);

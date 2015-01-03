@@ -3,7 +3,7 @@
 
   "name": "dibs filters extension",
   "description": "This extension helps with filtering github pull requests and jira fix versions",
-  "version": "1.0",
+  "version": "1.0.1",
 
   "content_scripts": [{
     "matches": [
