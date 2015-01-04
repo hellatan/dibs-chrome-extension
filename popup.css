@@ -18,6 +18,8 @@ input {
 
 a:link, a:visited {
     color: #b19b57;
+    outline: none;
+    text-decoration: none;
 }
 a:hover {
     color: #c3b17a;
