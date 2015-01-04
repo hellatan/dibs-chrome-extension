@@ -58,6 +58,10 @@ a:hover {
     border-color: white;
 }
 
+.tab-toggle-list-item.is-current:first-child > .tab-toggle-list-link {
+    border-left: 0;
+}
+
 .tab-toggle-list-link {
     background-color: #ccc;
     display: block;
