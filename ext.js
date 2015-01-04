@@ -81,14 +81,22 @@
             });
         },
         filterValue: function (e, type) {
-            type = (type || '').toLowerCase();
+
+            var map = {
+                jiraFixVersion: 'filterFixVersion',
+                jiraTicket: 'filterJiraTicket',
+                ghMilestone: 'filterMilestone'
+            };
+
             if (type === 'milestone') {
                 return this.filterMilestone(e);
-            } else if (type === 'fixversion') {
+            } else if (type === 'fixversion' || type === 'fixVersion') {
                 return this.filterFixVersion(e);
-            } else if (type === 'jiraticket') {
+            } else if (type === 'jiraticket' || type === 'jiraTicket') {
                 return this.filterJiraTicket(e);
             }
+
+            return map[type] && typeof map[type] === 'function' ? map[type]() : null;
         },
         filterFixVersion: function (e) {
             e.preventDefault();
@@ -116,6 +124,14 @@
         goToUrl: function (url) {
             window.open(url);
         }
+    };
+
+    var elements = {
+        jiraFixVersion: '#formFixVersionInput',
+        ghMilestone: '#formMilestoneInput',
+        ghStatus: '#formStatus > input[type=radio]',
+        jiraAssignee: '#formAssigneeInput',
+        jiraTicket: '#formJiraTicketInput'
     };
 
     elHelpers = {
@@ -364,7 +380,7 @@
         document
             .getElementById('formFixVersionSearch')
             .addEventListener('click', function (e) {
-                helpers.filterValue(e, 'fixVersion');
+                helpers.filterValue(e, 'jiraFixVersion');
             });
         document
             .getElementById('formJiraTicketSearch')
