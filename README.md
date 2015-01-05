@@ -9,4 +9,9 @@
 
 Your screen should look something like this:
 
-![chrome extensions](/chrome-extensions.png)
+![chrome extensions](/images/chrome-extensions.png)
+
+## UI
+
+![github tab](/images/dibs-chrome-extension-github-tab.png)
+![jira tab](/images/dibs-chrome-extension-jira-tab.png)
