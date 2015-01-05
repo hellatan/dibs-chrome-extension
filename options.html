@@ -6,23 +6,36 @@
     <link rel="stylesheet" href="popup.css"/>
 </head>
 <body>
+    <div class="options-container">
+        <h1>Settings</h1>
+        <form action="" id="" class="form-group">
 
-<form action="" id="" class="form-group">
-    <div id="formJiraDomain" class="input-wrap input-text-wrap">
-        <label for="jiraDomainInput" class="input-label">Jira Domain</label>
-        <input type="text" id="jiraDomainInput" class="form-input" placeholder="1stdibs.atlassian.net">
+            <div id="formGithubDefaultOrg" class="input-wrap input-text-wrap">
+                <label for="githubDefaultAuthorOrgInput" class="input-label">Default Github Organization</label>
+                <input type="text" id="githubDefaultAuthorOrgInput" class="form-input" placeholder="eg. 1stdibs">
+            </div>
+
+            <div id="formGithubDefaultUserName" class="input-wrap input-text-wrap">
+                <label for="githubDefaultUserNameInput" class="input-label">Default Github UserName</label>
+                <input type="text" id="githubDefaultUserNameInput" class="form-input" placeholder="eg. hellatan">
+            </div>
+
+            <div id="formJiraDomain" class="input-wrap input-text-wrap">
+                <label for="jiraDomainInput" class="input-label">Jira Domain</label>
+                <input type="text" id="jiraDomainInput" class="form-input" placeholder="eg. 1stdibs.atlassian.net">
+            </div>
+
+            <div id="formDefaultTab" class="input-wrap input-radio-wrap">
+                <label for="formDefaultTab" class="input-label">Default Tab Selected</label>
+                <input type="radio" name="formDefaultTab" value="github" />Github
+                <input type="radio" name="formDefaultTab" value="jira">Jira
+            </div>
+
+            <div id="status"></div>
+            <button id="save" class="form-button">Save</button>
+        </form>
+
+        <script src="options.js"></script>
     </div>
-
-    <div id="formDefaultTab" class="input-wrap input-radio-wrap">
-        <label for="formDefaultTab" class="input-label">Default Tab Selected</label>
-        <input type="radio" name="formDefaultTab" value="github" />Github
-        <input type="radio" name="formDefaultTab" value="jira">Jira
-    </div>
-
-    <div id="status"></div>
-    <button id="save" class="form-button">Save</button>
-</form>
-
-<script src="options.js"></script>
 </body>
 </html>

@@ -13,6 +13,8 @@ function convertToArray(obj) {
 
 // Saves options to chrome.storage
 function saveOptions() {
+    var ghOrg = document.getElementById('githubDefaultAuthorOrgInput').value;
+    var ghUserName = document.getElementById('githubDefaultUserNameInput').value;
     var jiraDomain = document.getElementById('jiraDomainInput').value;
     var defaultTab = convertToArray(document.querySelectorAll('input[name=formDefaultTab]'));
     defaultTab = defaultTab.filter(function (element) {
@@ -20,7 +22,9 @@ function saveOptions() {
     });
     chrome.storage.sync.set({
         jiraDomain: jiraDomain,
-        defaultTab: defaultTab.length ? defaultTab[0].value : ''
+        defaultTab: defaultTab.length ? defaultTab[0].value : '',
+        ghOrg: ghOrg || '',
+        ghUserName: ghUserName || ''
     }, function() {
         // Update status to let user know options were saved.
         var status = document.getElementById('status');
@@ -37,8 +41,12 @@ function restoreOptions() {
     // Use default value color = 'red' and likesColor = true.
     chrome.storage.sync.get({
         jiraDomain: '',
-        defaultTab: ''
+        defaultTab: '',
+        ghOrg: '',
+        ghUserName: ''
     }, function(items) {
+        document.getElementById('githubDefaultAuthorOrgInput').value = items.ghOrg;
+        document.getElementById('githubDefaultUserNameInput').value = items.ghUserName;
         document.getElementById('jiraDomainInput').value = items.jiraDomain;
         var defaultTab = convertToArray(document.querySelectorAll('input[name=formDefaultTab]'));
         defaultTab.forEach(function (element) {

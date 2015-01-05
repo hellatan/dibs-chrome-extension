@@ -16,10 +16,13 @@
         'assignee': jiraOriginals.assignee,
         'order':jiraOriginals.order
     };
+    var ghOrg = '1stdibs';
+    var ghUserName = '';
     var filters = {
         'is': 'is',
         'user': 'user',
-        'milestone': 'milestone'
+        'milestone': 'milestone',
+        'userName': 'author'
     };
     var decimalRegexp = /^\d{1,2}(\.\d{1,2})+$/;
     var jiraTicketRegexp = /^\w-\d{1,6}$/;
@@ -32,11 +35,13 @@
     if (chrome && chrome.storage) {
         // having this in a conditional makes the
         // browser not crash when running jasmine tests
-        chrome.storage.sync.get(['jiraDomain', 'defaultTab'], function (items) {
+        chrome.storage.sync.get(['jiraDomain', 'defaultTab', 'ghOrg', 'ghUserName'], function (items) {
             jiraDomain = items.jiraDomain || jiraDomain;
             jiraIssues = jiraIssues.replace('{jiraDomain}', jiraDomain);
             jiraTicket = jiraTicket.replace('{jiraDomain}', jiraDomain);
             defaultTabOnOpen = items.defaultTab;
+            ghOrg = items.ghOrg || ghOrg;
+            ghUserName = items.ghUsername;
         });
     } else {
         jiraIssues = jiraIssues.replace('{jiraDomain}', jiraDomain);
@@ -131,6 +136,9 @@
         getStatus: function () {
             return this.getEl('#formStatus > input[type=radio]');
         },
+        getGhUserName: function () {
+            return this.getEl('#formUserNameInput');
+        },
         getJiraAssignee: function () {
             return this.getEl('#formAssigneeInput');
         },
@@ -159,6 +167,10 @@
                 return item.checked === true;
             });
             return value.length ? value[0].value : ''
+        },
+        getGhUserNameValue: function () {
+            var $el = this.getGhUserName();
+            return $el.length ? $el[0].value : '';
         },
         showError: function (err) {
             var $el;
@@ -220,6 +232,11 @@
             }
             return {
                 value: status
+            }
+        },
+        ghUserName: function () {
+            return {
+                value: elHelpers.getGhUserNameValue()
             }
         },
         fixVersion: function () {
@@ -286,13 +303,17 @@
         milestonePRs: function () {
             var milestone = validationHelpers.milestone();
             var status = validationHelpers.status();
+            var userName = validationHelpers.ghUserName();
             var filterValues = {};
             var qsVals = [];
             var url;
             if (milestone && status) {
-                filterValues[filters.user] = '1stdibs';
+                filterValues[filters.user] = ghOrg;
                 filterValues[filters.is] = status.value;
                 filterValues[filters.milestone] = milestone.value;
+                if (userName.value) {
+                    filterValues[filters.userName] = userName.value;
+                }
                 Object.keys(filterValues).forEach(function (key) {
                     var filter = key + ':' + filterValues[key];
                     qsVals.push(filter);

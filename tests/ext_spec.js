@@ -21,6 +21,7 @@ describe('extension functionality test', function () {
         var $milestoneInputEl;
         var $statusOpenEl;
         var $statusClosedEl;
+        var $userNameEl;
 
         beforeEach(function () {
             urlSpy = spyOn(helpers, 'goToUrl');
@@ -29,6 +30,7 @@ describe('extension functionality test', function () {
             $milestoneInputEl = $('#formMilestoneInput');
             $statusOpenEl = $('input[type="radio"][value="open"]');
             $statusClosedEl = $('input[type="radio"][value="closed"]');
+            $userNameEl = $('#formUserNameInput');
         });
 
         afterEach(function () {
@@ -37,6 +39,7 @@ describe('extension functionality test', function () {
             $milestoneInputEl[0].value = '';
             $statusOpenEl[0].checked = false;
             $statusClosedEl[0].checked = false;
+            $userNameEl[0].value = '';
         });
 
         it('should result in errors being shown', function () {
@@ -48,6 +51,14 @@ describe('extension functionality test', function () {
             var url = 'https://github.com/pulls?q=user%3A1stdibs%20is%3Aopen%20milestone%3A5.5';
             $milestoneInputEl[0].value = '5.5';
             $statusOpenEl[0].checked = true;
+            document.getElementById('formMilestoneSearch').click();
+            expect(urlSpy).toHaveBeenCalledWith(url);
+        });
+        it('should result in a valid url with a user name', function () {
+            var url = 'https://github.com/pulls?q=user%3A1stdibs%20is%3Aopen%20milestone%3A5.5%20author%3Ahellatan';
+            $milestoneInputEl[0].value = '5.5';
+            $statusOpenEl[0].checked = true;
+            $userNameEl[0].value = 'hellatan';
             document.getElementById('formMilestoneSearch').click();
             expect(urlSpy).toHaveBeenCalledWith(url);
         });
