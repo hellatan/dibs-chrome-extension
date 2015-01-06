@@ -133,7 +133,17 @@ a:hover {
 }
 
 .input-label {
+    margin-right: 10px;
     padding-bottom: 10px;
+}
+
+.input-label-radio {
+    float: left;
+    margin-right: 10px;
+}
+
+.input-label-radio > input[type=radio] {
+    margin-right: 10px;
 }
 
 .input-text-wrap {

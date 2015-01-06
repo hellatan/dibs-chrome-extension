@@ -34,10 +34,14 @@
                     <label for="formMilestoneInput" class="input-label">Milestone</label>
                     <input type="text" placeholder="milestone" id="formMilestoneInput" class="form-input" />
                 </div>
-                <div id="formStatus" class="input-wrap input-radio-wrap">
-                    <label for="formStatus" class="input-label">Status</label>
-                    <input type="radio" name="formPRStatus" value="open" />Open
-                    <input type="radio" name="formPRStatus" value="closed">Closed
+                <div id="formStatus" class="input-wrap input-radio-wrap cf">
+                    <p class="input-label">Status</p>
+                    <label class="input-label input-label-radio" for="prStatusOpen">
+                        <input type="radio" name="formPRStatus" id="prStatusOpen" value="open" />Open
+                    </label>
+                    <label class="input-label input-label-radio" for="prStatusClosed">
+                        <input type="radio" name="formPRStatus" id="prStatusClosed" value="closed">Closed
+                    </label>
                 </div>
                 <div id="formUserName" class="input-wrap input-text-wrap">
                     <label for="formUserNameInput" class="input-label">User Name/Author</label>
