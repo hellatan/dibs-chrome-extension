@@ -3,21 +3,21 @@
 
   "name": "dibs filters extension",
   "description": "This extension helps with filtering github pull requests and jira fix versions",
-  "version": "1.0.0",
+  "version": "1.0.1",
 
   "content_scripts": [{
     "matches": [
         "https://github.com/*"
       ],
       "js": [
-        "sizzle.min.js",
-        "ext.js"
+        "js/sizzle.min.js",
+        "js/ext.js"
       ]
     }
   ],
 
   "browser_action": {
-    "default_icon": "icon.png",
+    "default_icon": "images/icon.png",
     "default_popup": "popup.html",
     "options": "options.html"
   },
@@ -25,5 +25,10 @@
     "tabs",
     "storage",
     "https://github.com/*"
-  ]
+  ],
+  "icons": {
+    "16": "images/icon.png",
+    "48": "images/icon.png",
+    "128": "images/icon.png"
+  }
 }
