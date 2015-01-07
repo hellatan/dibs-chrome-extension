@@ -17,6 +17,7 @@ function saveOptions() {
     var ghUserName = document.getElementById('githubDefaultUserNameInput').value;
     var jiraDomain = document.getElementById('jiraDomainInput').value;
     var defaultTab = convertToArray(document.querySelectorAll('input[name=formDefaultTab]'));
+    var persistInputValues = convertToArray(document.querySelectorAll('input[name=formPersistInputValues]'));
     defaultTab = defaultTab.filter(function (element) {
         return !!element.checked;
     });
@@ -24,7 +25,8 @@ function saveOptions() {
         jiraDomain: jiraDomain,
         defaultTab: defaultTab.length ? defaultTab[0].value : '',
         ghOrg: ghOrg || '',
-        ghUserName: ghUserName || ''
+        ghUserName: ghUserName || '',
+        persistInputValues: persistInputValues || ''
     }, function() {
         // Update status to let user know options were saved.
         var status = document.getElementById('status');
@@ -43,13 +45,21 @@ function restoreOptions() {
         jiraDomain: '',
         defaultTab: '',
         ghOrg: '',
-        ghUserName: ''
+        ghUserName: '',
+        persistInputValues: ''
     }, function(items) {
         document.getElementById('githubDefaultAuthorOrgInput').value = items.ghOrg;
         document.getElementById('githubDefaultUserNameInput').value = items.ghUserName;
         document.getElementById('jiraDomainInput').value = items.jiraDomain;
         var defaultTab = convertToArray(document.querySelectorAll('input[name=formDefaultTab]'));
+        var persistInputValues = convertToArray(document.querySelectorAll('input[name=formPersistInputValues]'));
         defaultTab.forEach(function (element) {
+            if (element.value === items.defaultTab) {
+                element.checked = true;
+            }
+        });
+
+        persistInputValues.forEach(function (element) {
             if (element.value === items.defaultTab) {
                 element.checked = true;
             }

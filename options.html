@@ -31,10 +31,24 @@
                 <input type="text" id="jiraDomainInput" class="form-input" placeholder="eg. 1stdibs.atlassian.net">
             </div>
 
-            <div id="formDefaultTab" class="input-wrap input-radio-wrap">
-                <label for="formDefaultTab" class="input-label">Default Tab Selected</label>
-                <input type="radio" name="formDefaultTab" value="github" />Github
-                <input type="radio" name="formDefaultTab" value="jira">Jira
+            <div id="formDefaultTab" class="input-wrap input-radio-wrap cf">
+                <p class="input-label">Default Tab Selected</p>
+                <label for="defaultTabGithub" class="input-label input-label-radio">
+                    <input type="radio" name="formDefaultTab" id="defaultTabGithub" value="github" />Github
+                </label>
+                <label for="defaultTabJira" class="input-label input-label-radio">
+                    <input type="radio" name="formDefaultTab" id="defaultTabJira" value="jira">Jira
+                </label>
+            </div>
+
+            <div id="formPersistInputValues" class="input-wrap input-radio-wrap cf">
+                <p class="input-label">Persist Input Values?</p>
+                <label for="persistInputValuesYes" class="input-label input-label-radio">
+                    <input type="radio" name="formPersistInputValues" id="persistInputValuesYes" value="yes" />Yes
+                </label>
+                <label for="persistInputValuesNo" class="input-label input-label-radio">
+                    <input type="radio" name="formPersistInputValues" id="persistInputValuesNo" value="no">No
+                </label>
             </div>
 
             <div id="status"></div>
