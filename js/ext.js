@@ -134,7 +134,7 @@
             return this.getEl('#formMilestoneInput')
         },
         getStatus: function () {
-            return this.getEl('#formStatus > input[type=radio]');
+            return this.getEl('#formStatus > .input-label-radio > input[type=radio]');
         },
         getGhUserName: function () {
             return this.getEl('#formUserNameInput');
