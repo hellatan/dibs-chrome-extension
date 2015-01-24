@@ -9,6 +9,9 @@
         .options-container {
             margin: 0 20px;
         }
+        .settings-input-label-radio {
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -30,11 +33,24 @@
                 <label for="jiraDomainInput" class="input-label">Jira Domain</label>
                 <input type="text" id="jiraDomainInput" class="form-input" placeholder="eg. 1stdibs.atlassian.net">
             </div>
+            <div id="formDefaultTab" class="input-wrap input-radio-wrap cf">
+                <p class="input-label">Default Tab Selected</p>
+                <label for="formDefaultTabGithub" class="input-label input-label-radio settings-input-label-radio">
+                    <input type="radio" name="formDefaultTab" id="formDefaultTabGithub" value="github" />Github
+                </label>
+                <label for="formDefaultTabJira" class="input-label input-label-radio settings-input-label-radio">
+                    <input type="radio" name="formDefaultTab" id="formDefaultTabJira" value="jira">Jira
+                </label>
+            </div>
 
-            <div id="formDefaultTab" class="input-wrap input-radio-wrap">
-                <label for="formDefaultTab" class="input-label">Default Tab Selected</label>
-                <input type="radio" name="formDefaultTab" value="github" />Github
-                <input type="radio" name="formDefaultTab" value="jira">Jira
+            <div id="formPopupWindow" class="input-wrap input-radio-wrap cf">
+                <p class="input-label">Use new window for each popup?</p>
+                <label for="formPopupWindowYes" class="input-label input-label-radio settings-input-label-radio">
+                    <input type="radio" name="formDefaultTab" id="formPopupWindowYes" value="y" />Yes
+                </label>
+                <label for="formPopupWindowNo" class="input-label input-label-radio settings-input-label-radio">
+                    <input type="radio" name="formDefaultTab" id="formPopupWindowNo" value="n">No
+                </label>
             </div>
 
             <div id="status"></div>
